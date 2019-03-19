@@ -1,0 +1,64 @@
+server:
+  port: 8076
+  tomcat:
+    uri-encoding: utf-8
+
+#按需填写（公司邮箱需替换spring.mail.username和spring.mail.properties.mail.smtp.ssl.trust为自己公司邮箱服务器）
+spring:
+  mail:
+    host: mail.test.com
+    username: liuzhuoming@test.com
+    password: test
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+          ssl:
+            trust: ${spring.mail.host}
+          connectiontimeout: 30000
+          timeout: 20000
+          writetimeout: 10000
+
+gnimouhz:
+  #svn配置
+  svn:
+    #是否允许svn日志
+    enable: false
+    #提取日志的svn地址（逗号分隔）
+    url: https://127.0.0.1/svn/web/test
+    #url对应的项目名（对应url，逗号分隔）
+    projectname: test
+    #svn账号
+    username: liuzhuoming
+    #svn密码
+    password: test
+  #git配置
+  git:
+    #是否允许git日志
+    enable: true
+    #git项目commit地址
+    url: https://github.com/xinxinUser/weekly-report.git
+    #提取日志的git项目所在路径（逗号分隔）
+    path: C:\Users\fm\Desktop\weekly-report
+    #url对应的项目名（对应url，逗号分隔）
+    projectname: test
+    #git用户名称（可在 idea-version control-log 查看，非账号或者github用户名）
+    username: xinxin
+  #收件相关配置
+  mail:
+    #发件邮箱
+    from: ${spring.mail.username}
+    #收件邮箱
+    to: liuzhuoming@test.com
+    #抄送邮箱（逗号分隔）
+    cc: test@qq.com
+  #发送周报时间
+  schedule:
+    #示例：每周下午18点整
+    cron: 0 00 18 ? * FRI

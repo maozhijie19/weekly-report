@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>配置信息</title>
+    <style type="text/css">
+        .field {
+            background: #969696
+        }
+    </style>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+<div>
+    <span class="field">svn.url</span>: <span th:text="${svn.url}"></span><br/>
+    <span class="field">svn.username</span>: <span th:text="${svn.username}"></span><br/>
+    <span class="field">mail.from</span>: <span th:text="${mail.from}"></span><br/>
+    <span class="field">mail.to</span>: <span th:text="${mail.to}"></span><br/>
+    <span class="field">mail.cc</span>: <span th:text="${mail.cc}"></span><br/>
+    <span class="field">schedule.cron</span>: <span
+        th:text="${schedule.cron}"></span><br/>
+    <button onclick="start()">开始任务</button>
+    <button onclick="send()">手动发件</button>
+</div>
+<script data-th-inline="javascript">
+    var ctx = [[@{
+        /}]];
+</script>
+<script>
+    function start() {
+        $.post(ctx + 'schedule/start',
+            {},
+            function (r) {
+                alert(r)
+            });
+    }
+
+    function send() {
+        $.post(ctx + 'mail/send',
+            {},
+            function (r) {
+                alert(r)
+            });
+    }
+</script>
+</body>
+</html>
