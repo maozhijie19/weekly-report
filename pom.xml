@@ -12,7 +12,7 @@
   </parent>
   <groupId>com.github.gnimouhz</groupId>
   <artifactId>weekly-report</artifactId>
-  <version>0.9.5</version>
+  <version>0.9.6</version>
   <name>weekly-report</name>
   <description>Automatically send weekly report mail messages.</description>
 
