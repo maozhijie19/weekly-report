@@ -36,6 +36,7 @@ public class GitHistory {
             Git.cloneRepository().setURI(url).setDirectory(new File(path)).call();
         } else {
             if (!dir.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 dir.mkdir();
             } else {
                 if (dir.isFile()) {

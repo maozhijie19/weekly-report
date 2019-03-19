@@ -32,7 +32,7 @@ import java.util.Date;
 public class TextMailSender {
 
     @Autowired
-    @SuppressWarnings("all")
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private JavaMailSender javaMailSender;
     @Autowired
     private MailConfig mailConfig;

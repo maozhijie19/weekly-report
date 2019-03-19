@@ -43,13 +43,13 @@ gnimouhz:
     #是否允许git日志
     enable: true
     #git项目commit地址
-    url: https://github.com/xinxinUser/weekly-report.git
+    url: https://github.com/xinxin23/weekly-report.git
     #提取日志的git项目所在路径（逗号分隔）
     path: C:\Users\fm\Desktop\weekly-report
     #url对应的项目名（对应url，逗号分隔）
     projectname: test
-    #git用户名称（可在 idea-version control-log 查看，非账号或者github用户名）
-    username: xinxin
+    #git作者名称（可使用命令"git config user.name"查看）
+    username: xinxin23
   #收件相关配置
   mail:
     #发件邮箱
