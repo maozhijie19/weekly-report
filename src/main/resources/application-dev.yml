@@ -29,7 +29,7 @@ gnimouhz:
   #svn配置
   svn:
     #是否允许svn日志
-    enable: false
+    enable: true
     #提取日志的svn地址（逗号分隔）
     url: https://127.0.0.1/svn/web/test
     #url对应的项目名（对应url，逗号分隔）
@@ -41,10 +41,10 @@ gnimouhz:
   #git配置
   git:
     #是否允许git日志
-    enable: true
+    enable: false
     #git项目commit地址
     url: https://github.com/xinxin23/weekly-report.git
-    #提取日志的git项目所在路径（逗号分隔）
+    #url对应的git项目存放路径（逗号分隔）
     path: C:\Users\fm\Desktop\weekly-report
     #url对应的项目名（对应url，逗号分隔）
     projectname: test
