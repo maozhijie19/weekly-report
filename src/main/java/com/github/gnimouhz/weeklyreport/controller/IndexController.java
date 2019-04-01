@@ -32,6 +32,10 @@ public class IndexController {
             put("url", svnConfig.getUrl());
             put("username", svnConfig.getUsername());
         }});
+        model.addAttribute("git", new HashMap<String, String>() {{
+            put("url", svnConfig.getUrl());
+            put("username", svnConfig.getUsername());
+        }});
         model.addAttribute("mail", new HashMap<String, String>() {{
             put("from", mailConfig.getFrom());
             put("to", mailConfig.getTo());
