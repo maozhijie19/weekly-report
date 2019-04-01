@@ -1,5 +1,6 @@
 package com.github.gnimouhz.weeklyreport.controller;
 
+import com.github.gnimouhz.weeklyreport.git.GitConfig;
 import com.github.gnimouhz.weeklyreport.mail.MailConfig;
 import com.github.gnimouhz.weeklyreport.schedule.ScheduleConfig;
 import com.github.gnimouhz.weeklyreport.svn.SvnConfig;
@@ -25,6 +26,8 @@ public class IndexController {
     private MailConfig mailConfig;
     @Autowired
     private SvnConfig svnConfig;
+    @Autowired
+    private GitConfig gitConfig;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -33,8 +36,8 @@ public class IndexController {
             put("username", svnConfig.getUsername());
         }});
         model.addAttribute("git", new HashMap<String, String>() {{
-            put("url", svnConfig.getUrl());
-            put("username", svnConfig.getUsername());
+            put("url", gitConfig.getUrl());
+            put("username", gitConfig.getUsername());
         }});
         model.addAttribute("mail", new HashMap<String, String>() {{
             put("from", mailConfig.getFrom());
