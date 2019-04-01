@@ -12,12 +12,18 @@
 </head>
 <body>
 <div>
-    <span class="field">svn.url</span>: <span th:text="${svn.url}"></span><br/>
-    <span class="field">svn.username</span>: <span th:text="${svn.username}"></span><br/>
-    <span class="field">mail.from</span>: <span th:text="${mail.from}"></span><br/>
-    <span class="field">mail.to</span>: <span th:text="${mail.to}"></span><br/>
-    <span class="field">mail.cc</span>: <span th:text="${mail.cc}"></span><br/>
-    <span class="field">schedule.cron</span>: <span
+    <span><b>svn</b></span><br/>
+    <span class="field">url</span>: <span th:text="${svn.url}"></span><br/>
+    <span class="field">username</span>: <span th:text="${svn.username}"></span><br/>
+    <span><b>git</b></span><br/>
+    <span class="field">url</span>: <span th:text="${svn.url}"></span><br/>
+    <span class="field">username</span>: <span th:text="${svn.username}"></span><br/>
+    <span><b>mail</b></span><br/>
+    <span class="field">from</span>: <span th:text="${mail.from}"></span><br/>
+    <span class="field">to</span>: <span th:text="${mail.to}"></span><br/>
+    <span class="field">cc</span>: <span th:text="${mail.cc}"></span><br/>
+    <span><b>schedule</b></span><br/>
+    <span class="field">cron</span>: <span
         th:text="${schedule.cron}"></span><br/>
     <button onclick="start()">开始任务</button>
     <button onclick="send()">手动发件</button>
