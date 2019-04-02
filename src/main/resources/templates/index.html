@@ -1,33 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:border="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>配置信息</title>
     <style type="text/css">
         .field {
-            background: #969696
+            display: block;
+            text-indent: 2em;
+        }
+
+        div {
+            border: 1px solid black
         }
     </style>
     <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 <body>
 <div>
-    <span><b>svn</b></span><br/>
-    <span class="field">url</span>: <span th:text="${svn.url}"></span><br/>
-    <span class="field">username</span>: <span th:text="${svn.username}"></span><br/>
-    <span><b>git</b></span><br/>
-    <span class="field">url</span>: <span th:text="${svn.url}"></span><br/>
-    <span class="field">username</span>: <span th:text="${svn.username}"></span><br/>
-    <span><b>mail</b></span><br/>
-    <span class="field">from</span>: <span th:text="${mail.from}"></span><br/>
-    <span class="field">to</span>: <span th:text="${mail.to}"></span><br/>
-    <span class="field">cc</span>: <span th:text="${mail.cc}"></span><br/>
-    <span><b>schedule</b></span><br/>
-    <span class="field">cron</span>: <span
-        th:text="${schedule.cron}"></span><br/>
-    <button onclick="start()">开始任务</button>
-    <button onclick="send()">手动发件</button>
+    <span>svn</span><br/>
+    <span class="field">url: <span th:text="${svn.url}"></span></span>
+    <span class="field">username: <span th:text="${svn.username}"></span></span>
+    <span>git</span><br/>
+    <span class="field">url: <span th:text="${svn.url}"></span></span>
+    <span class="field">username: <span th:text="${svn.username}"></span></span>
+    <span>mail</span><br/>
+    <span class="field">from: <span th:text="${mail.from}"></span></span>
+    <span class="field">to: <span th:text="${mail.to}"></span></span>
+    <span class="field">cc: <span th:text="${mail.cc}"></span></span>
+    <span>schedule</span><br/>
+    <span class="field">cron: <span th:text="${schedule.cron}"></span></span>
 </div>
+<button onclick="start()">开始任务</button>
+<button onclick="send()">手动发件</button>
 <script data-th-inline="javascript">
     var ctx = [[@{
         /}]];
