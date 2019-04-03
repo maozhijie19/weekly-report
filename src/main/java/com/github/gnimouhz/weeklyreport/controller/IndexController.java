@@ -31,20 +31,30 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model) {
-        model.addAttribute("svn", new HashMap<String, String>() {{
-            put("url", svnConfig.getUrl());
-            put("username", svnConfig.getUsername());
+        model.addAttribute("svn", new HashMap<String, String>(2) {{
+            if ("true".equalsIgnoreCase(svnConfig.getEnable())) {
+                put("url", svnConfig.getUrl());
+                put("username", svnConfig.getUsername());
+            } else {
+                put("url", "");
+                put("username", "");
+            }
         }});
-        model.addAttribute("git", new HashMap<String, String>() {{
-            put("url", gitConfig.getUrl());
-            put("username", gitConfig.getUsername());
+        model.addAttribute("git", new HashMap<String, String>(2) {{
+            if ("true".equalsIgnoreCase(gitConfig.getEnable())) {
+                put("url", gitConfig.getUrl());
+                put("username", gitConfig.getUsername());
+            } else {
+                put("url", "");
+                put("username", "");
+            }
         }});
-        model.addAttribute("mail", new HashMap<String, String>() {{
+        model.addAttribute("mail", new HashMap<String, String>(3) {{
             put("from", mailConfig.getFrom());
             put("to", mailConfig.getTo());
             put("cc", mailConfig.getCc());
         }});
-        model.addAttribute("schedule", new HashMap<String, String>() {{
+        model.addAttribute("schedule", new HashMap<String, String>(1) {{
             put("cron", scheduleConfig.getCron());
         }});
         return "index";
