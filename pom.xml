@@ -115,11 +115,11 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.10</version>
@@ -130,6 +130,54 @@
                     </buildArgs>
                 </configuration>
             </plugin>-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.2.0</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <!-- 指定基础镜像，在其上进行定制 -->
+                    <baseImage>openjdk:8-jre-alpine</baseImage>
+                    <!-- 维护者信息 -->
+                    <maintainer>
+                        liuzhuoming
+                    </maintainer>
+                    <!-- 设置时区为上海 -->
+                    <runs>
+                        <run>
+                            apk add tzdata
+                        </run>
+                        <run>
+                            cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+                        </run>
+                        <run>
+                            echo "Asia/Shanghai" > /etc/timezone
+                        </run>
+                        <run>
+                            apk del tzdata
+                        </run>
+                    </runs>
+                    <!-- 这里的/tmp目录就会在运行时自动挂载为匿名卷，任何向/tmp中写入的信息都不会记录进容器存储层 -->
+                    <volumes>
+                        <volume>
+                            /tmp
+                        </volume>
+                    </volumes>
+                    <!-- 声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务 -->
+                    <exposes>
+                        <expose>8076</expose>
+                    </exposes>
+                    <!-- 指定容器启动程序及参数 -->
+                    <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
         </plugins>
         <finalName>${project.artifactId}</finalName>
     </build>
