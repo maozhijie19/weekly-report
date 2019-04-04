@@ -2,7 +2,7 @@
 
 >quartz 2.3.0  
 springboot 2.1.3.RELEASE  
-java 8
+jdk 8+
 
 当前支持：  
 1. 自动获取svn提交日志并发送邮件；  
