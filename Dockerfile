@@ -2,7 +2,7 @@
 FROM openjdk:8-jre-alpine
 #维护者信息
 MAINTAINER liuzhuoming <liuzhuoming23@live.com>
-# 设置时区为上海
+#设置时区为上海
 RUN apk add tzdata \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
@@ -13,5 +13,5 @@ VOLUME /tmp
 COPY target/weekly-report.jar weekly-report.jar
 #声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务
 EXPOSE 8076
-#指定容器启动程序及参数<ENTRYPOINT><CMD>
+#指定容器启动程序及参数
 ENTRYPOINT ["java","-jar","weekly-report.jar"]
