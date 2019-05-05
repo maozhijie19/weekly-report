@@ -53,7 +53,7 @@ public class GitHistory {
      * @param url  git url
      * @param path git项目路径
      */
-    public List<GitHistoryLog> allHistory(String url, String path)
+    private List<GitHistoryLog> allHistory(String url, String path)
         throws GitAPIException, IOException {
         cloneOrPullFromGit(url, path);
         Git git = Git.open(new File(path));
@@ -77,7 +77,7 @@ public class GitHistory {
      * @param username git username
      * @return 当前git用户历史日志
      */
-    public List<GitHistoryLog> currentUserHistory(String url, String path, String username)
+    private List<GitHistoryLog> currentUserHistory(String url, String path, String username)
         throws GitAPIException, IOException {
         List<GitHistoryLog> list = allHistory(url, path);
         list = list.stream()
