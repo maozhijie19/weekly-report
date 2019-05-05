@@ -65,7 +65,7 @@ public class SvnHistory {
      * @param password svn password
      * @return 当前svn用户历史日志
      */
-    public List<SvnHistoryLog> currentUserHistory(String url, String username, String password)
+    private List<SvnHistoryLog> currentUserHistory(String url, String username, String password)
             throws SVNException {
         List<SvnHistoryLog> list = allHistory(url, username, password);
         list = list.stream()
