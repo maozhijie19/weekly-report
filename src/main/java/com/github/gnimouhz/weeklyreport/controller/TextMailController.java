@@ -22,6 +22,7 @@ import java.text.ParseException;
 @RequestMapping("mail")
 @Slf4j
 public class TextMailController {
+
     @Autowired
     private TextMailSender textMailSender;
 
@@ -34,6 +35,16 @@ public class TextMailController {
             e.printStackTrace();
             log.error("发件失败：" + e.getMessage());
             return "发件失败：" + e.getMessage();
+        }
+    }
+
+    @RequestMapping("/view")
+    public String viewMail() {
+        try {
+            return textMailSender.html();
+        } catch (ParseException | SVNException | GitAPIException | IOException e) {
+            e.printStackTrace();
+            return "error";
         }
     }
 }

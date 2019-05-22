@@ -1,57 +1,87 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:border="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>配置信息</title>
-    <style type="text/css">
-        .field {
-            display: block;
-            text-indent: 1em;
-        }
+  <meta charset="UTF-8">
+  <title>配置信息</title>
+  <style type="text/css">
+    .field {
+      display: block;
+      text-indent: 1em;
+    }
 
-        div {
-            border: 1px solid black
-        }
-    </style>
-    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    div {
+      border: 1px solid black
+    }
+  </style>
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 <body>
 <div>
-    <span>svn: </span><br/>
-    <span class="field">url: <span th:text="${svn.url}"></span></span>
-    <span class="field">username: <span th:text="${svn.username}"></span></span>
-    <span>git: </span><br/>
-    <span class="field">url: <span th:text="${git.url}"></span></span>
-    <span class="field">username: <span th:text="${git.username}"></span></span>
-    <span>mail: </span><br/>
-    <span class="field">from: <span th:text="${mail.from}"></span></span>
-    <span class="field">to: <span th:text="${mail.to}"></span></span>
-    <span class="field">cc: <span th:text="${mail.cc}"></span></span>
-    <span>schedule: </span><br/>
-    <span class="field">cron: <span th:text="${schedule.cron}"></span></span>
+  <span th:if="${svn.url!=''}">svn: </span><br th:if="${svn.url!=''}"/>
+  <span th:if="${svn.url!=''}" class="field">
+    url: <span th:text="${svn.url}">
+  </span></span>
+  <span th:if="${svn.url!=''}" class="field">
+    username: <span th:text="${svn.username}"></span>
+  </span>
+  <span th:if="${git.url!=''}">git:</span><br th:if="${git.url!=''}"/>
+  <span th:if="${git.url!=''}" class="field">
+    url: <span th:text="${git.username}"></span>
+  </span>
+  <span th:if="${git.url!=''}" class="field">
+    username: <span th:text="${git.username}"></span>
+  </span>
+  <span>mail: </span><br/>
+  <span class="field">from: <span th:text="${mail.from}"></span></span>
+  <span class="field">to: <span th:text="${mail.to}"></span></span>
+  <span class="field">cc: <span th:text="${mail.cc}"></span></span>
+  <span>schedule: </span><br/>
+  <span class="field">cron: <span th:text="${schedule.cron}"></span></span>
 </div>
+<button onclick="view()" id="buttonView">查看邮件内容</button>
 <button onclick="start()">开始任务</button>
 <button onclick="send()">手动发件</button>
+<div id="view" style="display: none">
+</div>
 <script data-th-inline="javascript">
-    var ctx = [[@{
-        /}]];
+  var ctx = [[@{
+    /}]];
 </script>
 <script>
-    function start() {
-        $.post(ctx + 'schedule/start',
-            {},
-            function (r) {
-                alert(r)
-            });
-    }
+  function view() {
+    var vi = $("#view");
+    var bv = $("#buttonView");
 
-    function send() {
-        $.post(ctx + 'mail/send',
-            {},
-            function (r) {
-                alert(r)
-            });
+    $.post(ctx + 'mail/view',
+        {},
+        function (r) {
+          $("#view").html(r);
+        });
+    if (!vi.is(':visible')) {
+      vi.show();
+      bv.text("隐藏邮件内容");
+    } else {
+      vi.hide();
+      bv.text("显示邮件内容");
+      $("#view").html("");
     }
+  }
+
+  function start() {
+    $.post(ctx + 'schedule/start',
+        {},
+        function (r) {
+          alert(r)
+        });
+  }
+
+  function send() {
+    $.post(ctx + 'mail/send',
+        {},
+        function (r) {
+          alert(r)
+        });
+  }
 </script>
 </body>
 </html>
