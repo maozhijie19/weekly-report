@@ -52,12 +52,12 @@
     var vi = $("#view");
     var bv = $("#buttonView");
 
-    $.post(ctx + 'mail/view',
-        {},
-        function (r) {
-          $("#view").html(r);
-        });
     if (!vi.is(':visible')) {
+      $.post(ctx + 'mail/view',
+          {},
+          function (r) {
+            $("#view").html(r);
+          });
       vi.show();
       bv.text("隐藏邮件内容");
     } else {
