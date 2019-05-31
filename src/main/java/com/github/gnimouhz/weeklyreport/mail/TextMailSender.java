@@ -65,6 +65,16 @@ public class TextMailSender {
             + "~"
             + sdfDate.format(new Date())
             + "-周报");
+
+        helper.setText(html(), true);
+        javaMailSender.send(message);
+    }
+
+    /**
+     * 获取邮件html内容
+     */
+    public String html() throws ParseException, SVNException, GitAPIException, IOException {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
         StringBuilder stringBuilder = new StringBuilder();
         //svn日志
         if (TRUE.equalsIgnoreCase(svnConfig.getEnable())) {
@@ -130,8 +140,6 @@ public class TextMailSender {
                 }
             }
         }
-
-        helper.setText(stringBuilder.toString(), true);
-        javaMailSender.send(message);
+        return stringBuilder.toString();
     }
 }
