@@ -1,13 +1,15 @@
-package com.github.gnimouhz.weeklyreport;
+package com.github.liuzhuoming23.vegetable.weeklyreport;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author liuzhuoming
+ */
 @SpringBootApplication
-public class WeeklyReportApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(WeeklyReportApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

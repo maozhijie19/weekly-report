@@ -1,4 +1,5 @@
-# 周报自动发送 #
+# vegetable-weekly-report
+周报邮件自动发送
 
 >quartz 2.3.0  
 springboot 2.1.3.RELEASE  

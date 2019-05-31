@@ -1,4 +1,4 @@
-package com.github.gnimouhz.weeklyreport.git;
+package com.github.liuzhuoming23.vegetable.weeklyreport.git;
 
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -20,8 +20,7 @@ import java.util.stream.Collectors;
 /**
  * weekly-report：git历史
  *
- * @author gnimouhzuil
- * @date 2019/3/19 9:38
+ * @author liuzhuoming
  */
 @Component
 @Slf4j
