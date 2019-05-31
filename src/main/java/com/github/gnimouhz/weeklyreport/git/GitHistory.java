@@ -1,5 +1,8 @@
 package com.github.gnimouhz.weeklyreport.git;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -50,7 +53,7 @@ public class GitHistory {
     /**
      * 获取全部git历史日志
      *
-     * @param url  git url
+     * @param url git url
      * @param path git项目路径
      */
     private List<GitHistoryLog> allHistory(String url, String path)
@@ -72,8 +75,8 @@ public class GitHistory {
     /**
      * 获取当前git用户历史日志（七天内）
      *
-     * @param url      git url
-     * @param path     git path
+     * @param url git url
+     * @param path git path
      * @param username git username
      * @return 当前git用户历史日志
      */
@@ -95,7 +98,11 @@ public class GitHistory {
             //过滤七天内日志
             .filter(o -> {
                 long date = o.getDate().getTime();
-                return date > System.currentTimeMillis() - 1000 * 60 * 60 * 24 * 6;
+                LocalDateTime lastSaturday
+                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.FRIDAY)
+                    .withHour(18).withMinute(30);
+                long ts = lastSaturday.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+                return date > ts;
             })
             //过滤当前用户日志
             .filter(o -> username.equals(o.getAuthor()))
@@ -107,8 +114,8 @@ public class GitHistory {
     /**
      * 获取当前git用户按照日期排序并合并后的历史日志（七天内）
      *
-     * @param url      git url
-     * @param path     git path
+     * @param url git url
+     * @param path git path
      * @param username git username
      * @return 当前git用户历史日志
      */
