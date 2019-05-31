@@ -11,7 +11,7 @@
     <relativePath/>
   </parent>
   <groupId>com.github.liuzhuoming23</groupId>
-  <artifactId>v-wr</artifactId>
+  <artifactId>vegetable-weekly-report</artifactId>
   <version>1.1.2</version>
   <name>vegetable-weekly-report</name>
   <description>Automatically send weekly report mail messages.</description>
