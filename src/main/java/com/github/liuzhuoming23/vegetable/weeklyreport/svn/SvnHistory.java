@@ -1,11 +1,7 @@
-package com.github.gnimouhz.weeklyreport.svn;
-
-import static java.time.DayOfWeek.MONDAY;
+package com.github.liuzhuoming23.vegetable.weeklyreport.svn;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,7 +23,6 @@ import java.util.stream.Collectors;
  * svn历史
  *
  * @author liuzhuoming
- * @datetime 2019/2/18 14:01
  */
 @Component
 @Slf4j

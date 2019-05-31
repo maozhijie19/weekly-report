@@ -1,4 +1,4 @@
-package com.github.gnimouhz.weeklyreport.util;
+package com.github.liuzhuoming23.vegetable.weeklyreport.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

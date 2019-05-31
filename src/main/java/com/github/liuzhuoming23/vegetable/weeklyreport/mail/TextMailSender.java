@@ -1,11 +1,11 @@
-package com.github.gnimouhz.weeklyreport.mail;
+package com.github.liuzhuoming23.vegetable.weeklyreport.mail;
 
-import com.github.gnimouhz.weeklyreport.git.GitConfig;
-import com.github.gnimouhz.weeklyreport.git.GitHistory;
-import com.github.gnimouhz.weeklyreport.git.GitHistoryLog;
-import com.github.gnimouhz.weeklyreport.svn.SvnConfig;
-import com.github.gnimouhz.weeklyreport.svn.SvnHistory;
-import com.github.gnimouhz.weeklyreport.svn.SvnHistoryLog;
+import com.github.liuzhuoming23.vegetable.weeklyreport.git.GitConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.git.GitHistory;
+import com.github.liuzhuoming23.vegetable.weeklyreport.git.GitHistoryLog;
+import com.github.liuzhuoming23.vegetable.weeklyreport.svn.SvnConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.svn.SvnHistory;
+import com.github.liuzhuoming23.vegetable.weeklyreport.svn.SvnHistoryLog;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import java.util.Date;
  * 发送html邮件
  *
  * @author liuzhuoming
- * @datetime 2019/1/4 9:57
  */
 @Component
 @Slf4j

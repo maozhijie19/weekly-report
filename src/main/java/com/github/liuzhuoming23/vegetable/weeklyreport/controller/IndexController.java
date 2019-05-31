@@ -1,9 +1,9 @@
-package com.github.gnimouhz.weeklyreport.controller;
+package com.github.liuzhuoming23.vegetable.weeklyreport.controller;
 
-import com.github.gnimouhz.weeklyreport.git.GitConfig;
-import com.github.gnimouhz.weeklyreport.mail.MailConfig;
-import com.github.gnimouhz.weeklyreport.schedule.ScheduleConfig;
-import com.github.gnimouhz.weeklyreport.svn.SvnConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.git.GitConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.mail.MailConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.schedule.ScheduleConfig;
+import com.github.liuzhuoming23.vegetable.weeklyreport.svn.SvnConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +15,6 @@ import java.util.HashMap;
  * 首页controller
  *
  * @author liuzhuoming
- * @datetime 2019/2/19 16:05
  */
 @Controller
 public class IndexController {
