@@ -82,7 +82,7 @@ public class SvnHistory {
                 }
                 return 0;
             })
-            //过滤七天内日志
+            //过滤上周六到当前时间内日志
             .filter(o -> {
                 long date = o.getDate().getTime();
                 LocalDateTime lastSaturday
