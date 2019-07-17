@@ -38,7 +38,7 @@ spring:
 vegetable:
   #svn配置
   svn:
-    #是否允许svn日志
+    #是否允许svn日志：默认false
     enable: true
     #提取日志的svn地址（逗号分隔）
     url: https://127.0.0.1/svn/web/test
@@ -48,9 +48,15 @@ vegetable:
     username: liuzhuoming
     #svn密码
     password: test
+    #从每周的第几天获取记录：默认5=星期五
+    dayOfWeek: 5
+    #小时：默认18
+    hours: 18
+    #分钟：默认00
+    minutes: 00
   #git配置
   git:
-    #是否允许git日志
+    #是否允许git日志：默认false
     enable: false
     #git项目commit地址
     url: https://github.com/xinxin23/weekly-report.git
@@ -60,6 +66,12 @@ vegetable:
     projectname: test
     #git作者名称（可使用命令"git config user.name"查看）
     username: xinxin23
+    #从每周的第几天获取记录：默认5=星期五
+    dayOfWeek: 5
+    #小时：默认18
+    hours: 18
+    #分钟：默认00
+    minutes: 00
   #收件相关配置
   mail:
     #发件邮箱
@@ -70,5 +82,5 @@ vegetable:
     cc: test@qq.com
   #发送周报时间
   schedule:
-    #示例：每周下午18点整
+    #示例：每周五下午18点整
     cron: 0 00 18 ? * FRI

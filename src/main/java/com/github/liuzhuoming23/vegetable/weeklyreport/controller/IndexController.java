@@ -31,7 +31,7 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("svn", new HashMap<String, String>(2) {{
-            if ("true".equalsIgnoreCase(svnConfig.getEnable())) {
+            if (svnConfig.getEnable()) {
                 put("url", svnConfig.getUrl());
                 put("username", svnConfig.getUsername());
             } else {
@@ -40,7 +40,7 @@ public class IndexController {
             }
         }});
         model.addAttribute("git", new HashMap<String, String>(2) {{
-            if ("true".equalsIgnoreCase(gitConfig.getEnable())) {
+            if (gitConfig.getEnable()) {
                 put("url", gitConfig.getUrl());
                 put("username", gitConfig.getUsername());
             } else {

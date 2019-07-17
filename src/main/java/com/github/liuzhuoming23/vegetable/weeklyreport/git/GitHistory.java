@@ -8,6 +8,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -25,6 +26,9 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class GitHistory {
+
+    @Autowired
+    private GitConfig gitConfig;
 
     /**
      * 从gitclone或者pull项目
@@ -94,12 +98,12 @@ public class GitHistory {
                 }
                 return 0;
             })
-            //过滤上周六到当前时间内日志
+            //过滤上周五下午六点半到当前时间内日志
             .filter(o -> {
                 long date = o.getDate().getTime();
                 LocalDateTime lastSaturday
-                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.FRIDAY)
-                    .withHour(18).withMinute(30);
+                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.of(gitConfig.getDayOfWeek()))
+                    .withHour(gitConfig.getHours()).withMinute(gitConfig.getMinutes());
                 long ts = lastSaturday.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
                 return date > ts;
             })

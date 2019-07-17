@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class GitConfig {
 
-    @Value("${vegetable.git.enable}")
-    private String enable;
+    @Value("${vegetable.git.enable:false}")
+    private Boolean enable;
     @Value("${vegetable.git.path}")
     private String path;
     @Value("${vegetable.git.url}")
@@ -23,4 +23,10 @@ public class GitConfig {
     private String username;
     @Value("${vegetable.git.projectname}")
     private String projectname;
+    @Value("${vegetable.git.dayOfWeek:5}")
+    private Integer dayOfWeek;
+    @Value("${vegetable.git.hours:18}")
+    private Integer hours;
+    @Value("${vegetable.git.minutes:00}")
+    private Integer minutes;
 }
