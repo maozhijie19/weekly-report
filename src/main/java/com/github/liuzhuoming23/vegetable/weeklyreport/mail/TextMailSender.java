@@ -127,7 +127,7 @@ public class TextMailSender {
                     .append("）")
                     .append("</h1>");
                 for (GitHistoryLog gitHistoryLog : gitHistory
-                    .sortedAndMergeHistory(url, path, gitConfig.getUsername())) {
+                    .sortedAndMergeHistory(url, path)) {
                     stringBuilder
                         .append("<b>")
                         .append(sdfDate.format(gitHistoryLog.getDate()))

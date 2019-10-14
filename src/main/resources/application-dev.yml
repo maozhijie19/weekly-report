@@ -60,12 +60,18 @@ vegetable:
     enable: false
     #git项目commit地址
     url: https://github.com/xinxin23/weekly-report.git
+    #获取分支名称
+    branchName: test
     #url对应的git项目存放路径（逗号分隔）
     path: C:\Users\fm\Desktop\weekly-report
     #url对应的项目名（对应url，逗号分隔）
     projectname: test
+    #git帐号
+    username: liuzhuoming
+    #git密码
+    password: liuzhuoming
     #git作者名称（可使用命令"git config user.name"查看）
-    username: xinxin23
+    authorName: liuzhuoming23
     #从每周的第几天获取记录：默认5=星期五
     dayOfWeek: 5
     #小时：默认18

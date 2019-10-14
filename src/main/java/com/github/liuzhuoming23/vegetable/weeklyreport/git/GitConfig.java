@@ -21,6 +21,8 @@ public class GitConfig {
     private String url;
     @Value("${vegetable.git.username}")
     private String username;
+    @Value("${vegetable.git.password}")
+    private String password;
     @Value("${vegetable.git.projectname}")
     private String projectname;
     @Value("${vegetable.git.dayOfWeek:5}")
@@ -29,4 +31,8 @@ public class GitConfig {
     private Integer hours;
     @Value("${vegetable.git.minutes:00}")
     private Integer minutes;
+    @Value("${vegetable.git.branchName:''}")
+    private String branchName;
+    @Value("${vegetable.git.authorName:''}")
+    private String authorName;
 }
