@@ -1,9 +1,11 @@
 package com.github.liuzhuoming23.vegetable.weeklyreport.svn;
 
+import com.github.liuzhuoming23.vegetable.weeklyreport.git.GitConfig;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.SVNException;
 import org.tmatesoft.svn.core.SVNLogEntry;
@@ -27,6 +29,9 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class SvnHistory {
+
+    @Autowired
+    private SvnConfig svnConfig;
 
     /**
      * 获取全部svn历史日志
@@ -82,12 +87,12 @@ public class SvnHistory {
                 }
                 return 0;
             })
-            //过滤七天内日志
+            //过滤上周五下午六点半到当前时间内日志
             .filter(o -> {
                 long date = o.getDate().getTime();
                 LocalDateTime lastSaturday
-                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.FRIDAY)
-                    .withHour(18).withMinute(30);
+                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.of(svnConfig.getDayOfWeek()))
+                    .withHour(svnConfig.getHours()).withMinute(svnConfig.getMinutes());
                 long ts = lastSaturday.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
                 return date > ts;
             })

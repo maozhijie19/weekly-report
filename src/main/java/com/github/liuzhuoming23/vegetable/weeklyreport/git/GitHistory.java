@@ -8,6 +8,9 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -26,16 +29,30 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GitHistory {
 
+    @Autowired
+    private GitConfig gitConfig;
+
+
     /**
      * 从gitclone或者pull项目
      *
      * @param path 文件地址
      */
     private void cloneOrPullFromGit(String url, String path) throws GitAPIException, IOException {
+        CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(
+            gitConfig.getUsername(), gitConfig.getPassword());
         File dir = new File(path);
         if (dir.exists() && dir.isDirectory() && !new File(path + File.separator + ".git")
             .exists()) {
-            Git.cloneRepository().setURI(url).setDirectory(new File(path)).call();
+            Git.cloneRepository()
+                .setURI(url)
+                .setCredentialsProvider(credentialsProvider)
+                .setDirectory(new File(path))
+                .setCloneAllBranches(true)
+                .call();
+            if (gitConfig.getBranchName() != null && !"".equals(gitConfig.getBranchName())) {
+                checkoutBranch(path, gitConfig.getBranchName());
+            }
         } else {
             if (!dir.exists()) {
                 //noinspection ResultOfMethodCallIgnored
@@ -45,14 +62,32 @@ public class GitHistory {
                     throw new RuntimeException(path + "存在同名文件");
                 }
             }
-            Git.open(new File(path)).pull().call();
+            Git.open(new File(path))
+                .pull()
+                .setCredentialsProvider(credentialsProvider)
+                .call();
+        }
+    }
+
+    public void checkoutBranch(String path, String branchName) {
+        CredentialsProvider credentialsProvider = new UsernamePasswordCredentialsProvider(
+            gitConfig.getUsername(), gitConfig.getPassword());
+        String projectURL = path + "\\.git";
+
+        try (Git git = Git.open(new File(projectURL))) {
+            git.checkout().setCreateBranch(true).setName(branchName).call();
+            git.pull().setCredentialsProvider(credentialsProvider).call();
+            System.out.println("切换分支成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("切换分支失败");
         }
     }
 
     /**
      * 获取全部git历史日志
      *
-     * @param url git url
+     * @param url  git url
      * @param path git项目路径
      */
     private List<GitHistoryLog> allHistory(String url, String path)
@@ -74,12 +109,11 @@ public class GitHistory {
     /**
      * 获取当前git用户历史日志（七天内）
      *
-     * @param url git url
+     * @param url  git url
      * @param path git path
-     * @param username git username
      * @return 当前git用户历史日志
      */
-    private List<GitHistoryLog> currentUserHistory(String url, String path, String username)
+    private List<GitHistoryLog> currentUserHistory(String url, String path)
         throws GitAPIException, IOException {
         List<GitHistoryLog> list = allHistory(url, path);
         list = list.stream()
@@ -94,17 +128,19 @@ public class GitHistory {
                 }
                 return 0;
             })
-            //过滤七天内日志
+            //过滤上周五下午六点半到当前时间内日志
             .filter(o -> {
                 long date = o.getDate().getTime();
                 LocalDateTime lastSaturday
-                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.FRIDAY)
-                    .withHour(18).withMinute(30);
+                    = LocalDateTime.now().minusWeeks(1).with(DayOfWeek.of(gitConfig.getDayOfWeek()))
+                    .withHour(gitConfig.getHours()).withMinute(gitConfig.getMinutes());
                 long ts = lastSaturday.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
                 return date > ts;
             })
             //过滤当前用户日志
-            .filter(o -> username.equals(o.getAuthor()))
+            .filter(o -> gitConfig.getAuthorName().equals(o.getAuthor()))
+            //过滤合并代码日志
+            .filter(o -> !o.getMessage().contains("Merge remote-tracking"))
             .collect(Collectors.toList());
         return list;
     }
@@ -113,15 +149,14 @@ public class GitHistory {
     /**
      * 获取当前git用户按照日期排序并合并后的历史日志（七天内）
      *
-     * @param url git url
+     * @param url  git url
      * @param path git path
-     * @param username git username
      * @return 当前git用户历史日志
      */
-    public List<GitHistoryLog> sortedAndMergeHistory(String url, String path, String username)
+    public List<GitHistoryLog> sortedAndMergeHistory(String url, String path)
         throws ParseException, GitAPIException, IOException {
         SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy/MM/dd");
-        List<GitHistoryLog> list = currentUserHistory(url, path, username);
+        List<GitHistoryLog> list = currentUserHistory(url, path);
         Set<Date> set = new HashSet<>();
         for (GitHistoryLog log : list) {
             set.add(sdfDateTime.parse(sdfDateTime.format(log.getDate())));
@@ -143,9 +178,9 @@ public class GitHistory {
                 }
             }
         }
-        for (GitHistoryLog log : logs) {
-            log.setMessage(log.getMessage().substring(0, log.getMessage().length() - 1) + "。");
-        }
+//        for (GitHistoryLog log : logs) {
+//            log.setMessage(log.getMessage().substring(0, log.getMessage().length() - 1) + "。");
+//        }
         logs = logs.stream()
             //时间先后排序
             .sorted((o1, o2) -> {
@@ -159,7 +194,7 @@ public class GitHistory {
                 return 0;
             })
             //格式化日志（换行）
-            .peek(x -> x.setMessage(x.getMessage().replace("；", "；<br/>")))
+            .peek(x -> x.setMessage(x.getMessage().replace("；", "<br/>")))
             .collect(Collectors.toList());
         return logs;
     }

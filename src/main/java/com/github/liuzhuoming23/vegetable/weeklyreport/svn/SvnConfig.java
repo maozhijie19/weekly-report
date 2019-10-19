@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @Data
 public class SvnConfig {
 
-    @Value("${vegetable.svn.enable}")
-    private String enable;
+    @Value("${vegetable.svn.enable:false}")
+    private Boolean enable;
     @Value("${vegetable.svn.url}")
     private String url;
     @Value("${vegetable.svn.username}")
@@ -23,4 +23,10 @@ public class SvnConfig {
     private String password;
     @Value("${vegetable.svn.projectname}")
     private String projectname;
+    @Value("${vegetable.svn.dayOfWeek:5}")
+    private Integer dayOfWeek;
+    @Value("${vegetable.svn.hours:18}")
+    private Integer hours;
+    @Value("${vegetable.svn.minutes:00}")
+    private Integer minutes;
 }

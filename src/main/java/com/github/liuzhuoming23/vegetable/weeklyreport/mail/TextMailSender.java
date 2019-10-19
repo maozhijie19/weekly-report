@@ -44,8 +44,6 @@ public class TextMailSender {
     @Autowired
     private GitHistory gitHistory;
 
-    private static final String TRUE = "true";
-
     public void send()
         throws SVNException, MessagingException, ParseException, GitAPIException, IOException {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
@@ -76,7 +74,7 @@ public class TextMailSender {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
         StringBuilder stringBuilder = new StringBuilder();
         //svn日志
-        if (TRUE.equalsIgnoreCase(svnConfig.getEnable())) {
+        if (svnConfig.getEnable()) {
             log.error(svnConfig.toString());
             String[] urls = svnConfig.getUrl().split(",");
             String[] projectNames = svnConfig.getProjectname().split(",");
@@ -107,7 +105,7 @@ public class TextMailSender {
             }
         }
         //git日志
-        if (TRUE.equalsIgnoreCase(gitConfig.getEnable())) {
+        if (gitConfig.getEnable()) {
             log.error(gitConfig.toString());
             String[] urls = gitConfig.getUrl().split(",");
             String[] paths = gitConfig.getPath().split(",");
@@ -129,7 +127,7 @@ public class TextMailSender {
                     .append("）")
                     .append("</h1>");
                 for (GitHistoryLog gitHistoryLog : gitHistory
-                    .sortedAndMergeHistory(url, path, gitConfig.getUsername())) {
+                    .sortedAndMergeHistory(url, path)) {
                     stringBuilder
                         .append("<b>")
                         .append(sdfDate.format(gitHistoryLog.getDate()))
